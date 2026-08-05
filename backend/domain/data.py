@@ -44,7 +44,7 @@ CLIENTS: dict[str, dict] = {
 PRODUCTS: dict[str, dict] = {
     "HX-200": {
         "sku": "HX-200",
-        "name": "Industrial Safety Helmet HX-200",
+        "name": "Casco de Seguridad Industrial HX-200",
         "category": "safety",
         "unit_price": 45.00,
         "currency": "USD",
@@ -52,7 +52,7 @@ PRODUCTS: dict[str, dict] = {
     },
     "BT-500": {
         "sku": "BT-500",
-        "name": "Steel-Toe Safety Boots BT-500",
+        "name": "Botas de Seguridad Punta de Acero BT-500",
         "category": "safety",
         "unit_price": 89.00,
         "currency": "USD",
@@ -60,7 +60,7 @@ PRODUCTS: dict[str, dict] = {
     },
     "GL-300": {
         "sku": "GL-300",
-        "name": "Chemical Resistant Gloves GL-300",
+        "name": "Guantes Resistentes a Químicos GL-300",
         "category": "safety",
         "unit_price": 32.00,
         "currency": "USD",
@@ -68,7 +68,7 @@ PRODUCTS: dict[str, dict] = {
     },
     "WL-100": {
         "sku": "WL-100",
-        "name": "Industrial Welding Machine WL-100",
+        "name": "Máquina de Soldar Industrial WL-100",
         "category": "equipment",
         "unit_price": 2500.00,
         "currency": "USD",
@@ -76,7 +76,7 @@ PRODUCTS: dict[str, dict] = {
     },
     "CP-750": {
         "sku": "CP-750",
-        "name": "Air Compressor CP-750",
+        "name": "Compresor de Aire CP-750",
         "category": "equipment",
         "unit_price": 1800.00,
         "currency": "USD",
@@ -84,7 +84,7 @@ PRODUCTS: dict[str, dict] = {
     },
     "VL-400": {
         "sku": "VL-400",
-        "name": "Safety Valve VL-400",
+        "name": "Válvula de Seguridad VL-400",
         "category": "parts",
         "unit_price": 120.00,
         "currency": "USD",
@@ -97,8 +97,8 @@ INVENTORY: dict[str, dict[str, int]] = {
     "HX-200": {"Lima": 500, "Arequipa": 150, "Piura": 80},
     "BT-500": {"Lima": 200, "Arequipa": 60, "Piura": 40},
     "GL-300": {"Lima": 1000, "Arequipa": 300, "Piura": 200},
-    "WL-100": {"Lima": 15, "Arequipa": 5, "Piura": 3},
-    "CP-750": {"Lima": 10, "Arequipa": 4, "Piura": 2},
+    "WL-100": {"Lima": 15, "Arequipa": 5, "Piura": 10},
+    "CP-750": {"Lima": 10, "Arequipa": 4, "Piura": 8},
     "VL-400": {"Lima": 250, "Arequipa": 100, "Piura": 50},
 }
 

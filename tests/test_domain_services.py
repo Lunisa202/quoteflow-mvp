@@ -45,7 +45,7 @@ class TestProductServices:
     def test_get_known_product(self):
         product = get_product("HX-200")
         assert product is not None
-        assert product["name"] == "Industrial Safety Helmet HX-200"
+        assert product["name"] == "Casco de Seguridad Industrial HX-200"
         assert product["unit_price"] == 45.00
 
     def test_get_unknown_product(self):
@@ -56,12 +56,12 @@ class TestProductServices:
         assert is_known_product("FAKE") is False
 
     def test_find_product_by_name(self):
-        product = find_product_by_name("helmet")
+        product = find_product_by_name("casco")
         assert product is not None
         assert product["sku"] == "HX-200"
 
     def test_find_product_by_partial_name(self):
-        product = find_product_by_name("welding")
+        product = find_product_by_name("soldar")
         assert product is not None
         assert product["sku"] == "WL-100"
 

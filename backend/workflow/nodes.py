@@ -22,46 +22,50 @@ from backend.services.quote_service import update_quote, add_history_event
 
 # --- Node: Extract structured data from natural language ---
 
-EXTRACTION_PROMPT = """You are a B2B quotation assistant for AndesPro Industrial.
-Extract structured information from the customer's request.
+EXTRACTION_PROMPT_TEMPLATE = """Eres un asistente de cotización B2B para AndesPro Industrial.
+Extrae información estructurada de la solicitud del cliente.
 
-You MUST respond with valid JSON only, no additional text.
+Debes responder ÚNICAMENTE con JSON válido, sin texto adicional.
 
-Extract:
-- items: array of {sku, product_name, quantity, requested_discount_pct}
-- delivery_location: string (city/location for delivery)
-- delivery_date: string (requested delivery date if mentioned)
-- requested_discount_pct: number (overall discount percentage if mentioned)
-- special_instructions: string (any special requirements)
-- missing_fields: array of strings (essential information that is missing)
+Extrae:
+- items: array de objetos con campos: sku, product_name, quantity, requested_discount_pct
+- delivery_location: string (ciudad/ubicación de entrega)
+- delivery_date: string (fecha de entrega solicitada si se menciona)
+- requested_discount_pct: number (porcentaje de descuento general si se menciona)
+- special_instructions: string (requisitos especiales)
+- missing_fields: array de strings (información esencial que falta)
 
-Available products (use these SKUs):
-- HX-200: Industrial Safety Helmet HX-200
-- BT-500: Steel-Toe Safety Boots BT-500
-- GL-300: Chemical Resistant Gloves GL-300
-- WL-100: Industrial Welding Machine WL-100
-- CP-750: Air Compressor CP-750
-- VL-400: Safety Valve VL-400
+Productos disponibles (usa estos SKUs):
+{products_catalog}
 
-If a product is mentioned but doesn't match any known product, still include it with sku="UNKNOWN".
-If quantity is not specified, mark it in missing_fields.
-If no discount is mentioned, use 0.
+Si un producto mencionado no coincide con ninguno conocido, inclúyelo con sku="UNKNOWN".
+Si no se especifica cantidad, márcalo en missing_fields.
+Si no se menciona descuento, usa 0.
+IMPORTANTE: Los valores de missing_fields deben estar en español (ej: "cantidad", "ubicación de entrega", "fecha de entrega", "producto específico").
 
-JSON format:
-{
-  "items": [{"sku": "HX-200", "product_name": "Industrial Safety Helmet", "quantity": 20, "requested_discount_pct": 8}],
+Formato JSON:
+{{
+  "items": [{{"sku": "HX-200", "product_name": "Casco de Seguridad Industrial", "quantity": 20, "requested_discount_pct": 8}}],
   "delivery_location": "Arequipa",
-  "delivery_date": "next week",
+  "delivery_date": "próxima semana",
   "requested_discount_pct": 8,
   "special_instructions": "",
   "missing_fields": []
-}"""
+}}"""
+
+
+def _build_extraction_prompt() -> str:
+    """Build extraction prompt dynamically from product catalog."""
+    from backend.domain.data import PRODUCTS
+    catalog_lines = [f"- {sku}: {p['name']}" for sku, p in PRODUCTS.items()]
+    catalog_str = "\n".join(catalog_lines)
+    return EXTRACTION_PROMPT_TEMPLATE.format(products_catalog=catalog_str)
 
 
 async def extraction_node(state: QuoteState, llm) -> dict:
     """Extract structured data from natural language request using LLM."""
     messages = [
-        SystemMessage(content=EXTRACTION_PROMPT),
+        SystemMessage(content=_build_extraction_prompt()),
         HumanMessage(content=f"Client ID: {state['client_id']}\nRequest: {state['raw_text']}"),
     ]
 
@@ -80,7 +84,7 @@ async def extraction_node(state: QuoteState, llm) -> dict:
     except json.JSONDecodeError:
         return {
             "status": "error",
-            "error": "Failed to parse extraction response",
+            "error": "Error al parsear la respuesta de extracción",
             "current_node": "extraction",
         }
 
@@ -113,12 +117,12 @@ async def validation_node(state: QuoteState) -> dict:
     client_id = state.get("client_id", "")
     client_known = is_known_client(client_id)
     if not client_known:
-        issues.append(f"Unknown client: {client_id}")
+        issues.append(f"Cliente desconocido: {client_id}")
 
     # 2. Check missing fields
     missing = extracted.get("missing_fields", [])
     if missing:
-        issues.append(f"Missing essential information: {', '.join(missing)}")
+        issues.append(f"Información esencial faltante: {', '.join(missing)}")
 
     # 3. Check all products are known
     items = extracted.get("items", [])
@@ -126,7 +130,7 @@ async def validation_node(state: QuoteState) -> dict:
     for item in items:
         if item.get("sku") == "UNKNOWN" or not is_known_product(item.get("sku", "")):
             all_products_known = False
-            issues.append(f"Unknown product: {item.get('product_name', 'N/A')}")
+            issues.append(f"Producto desconocido: {item.get('product_name', 'N/A')}")
 
     # 4. Check stock
     stock_available = True
@@ -137,8 +141,8 @@ async def validation_node(state: QuoteState) -> dict:
             if not stock_result["available"]:
                 stock_available = False
                 issues.append(
-                    f"Insufficient stock for {item['sku']} at {location}: "
-                    f"need {item.get('quantity', 0)}, have {stock_result['stock']}"
+                    f"Stock insuficiente para {item['sku']} en {location}: "
+                    f"se necesitan {item.get('quantity', 0)}, disponibles {stock_result['stock']}"
                 )
 
     # 5. Check discount policy
@@ -151,9 +155,9 @@ async def validation_node(state: QuoteState) -> dict:
         discount_result = validate_discount(client_tier, requested_discount)
         if not discount_result.get("allowed"):
             discount_allowed = False
-            issues.append(discount_result.get("reason", "Discount exceeds policy"))
+            issues.append(discount_result.get("reason", "Descuento excede la política"))
         if discount_result.get("requires_approval"):
-            approval_reasons.append(discount_result.get("reason", "Discount requires approval"))
+            approval_reasons.append(discount_result.get("reason", "Descuento requiere aprobación"))
 
     # 6. Check if total would exceed approval threshold (estimate)
     estimated_total = sum(
@@ -163,7 +167,7 @@ async def validation_node(state: QuoteState) -> dict:
     )
     if estimated_total > 10000:
         approval_reasons.append(
-            f"Estimated total USD {estimated_total:,.2f} exceeds USD 10,000 threshold"
+            f"Total estimado USD {estimated_total:,.2f} excede el umbral de USD 10,000"
         )
 
     # Build validation result
@@ -264,19 +268,21 @@ async def calculation_node(state: QuoteState) -> dict:
 
 # --- Node: Generate draft response ---
 
-DRAFT_PROMPT = """You are a professional B2B quotation assistant for AndesPro Industrial.
-Generate a clear, professional quotation draft based on the data provided.
+DRAFT_PROMPT = """Eres un asistente profesional de cotización B2B para AndesPro Industrial.
+Genera un borrador de cotización claro y profesional EN ESPAÑOL basado en los datos proporcionados.
 
-The draft should include:
-- Greeting with client name
-- Summary of requested items with pricing
-- Discount applied (if any)
-- Delivery terms
-- Total amount
-- Validity period (30 days)
-- Standard terms
+El borrador DEBE estar completamente en español e incluir:
+- Saludo con el nombre del cliente
+- Resumen de los productos solicitados con precios
+- Descuento aplicado (si corresponde)
+- Condiciones de entrega
+- Monto total
+- Período de validez (30 días)
+- Términos estándar
 
-Keep it professional and concise. This is a DRAFT for internal review before sending to client.
+IMPORTANTE: Todo el texto debe estar en español. No uses inglés.
+Redacta de forma profesional y concisa.
+Este es un BORRADOR para revisión interna antes de enviar al cliente.
 """
 
 
@@ -294,7 +300,7 @@ async def draft_node(state: QuoteState, llm) -> dict:
 
     messages = [
         SystemMessage(content=DRAFT_PROMPT),
-        HumanMessage(content=f"Generate a quotation draft based on:\n{context}"),
+        HumanMessage(content=f"Genera un borrador de cotización basado en:\n{context}"),
     ]
 
     response = await llm.ainvoke(messages)
@@ -322,11 +328,11 @@ async def clarification_node(state: QuoteState) -> dict:
     issues = validation.get("issues", [])
     missing = extracted.get("missing_fields", [])
 
-    message = "The following information is needed to process this quotation:\n"
+    message = "Se necesita la siguiente información para procesar esta cotización:\n"
     for issue in issues:
         message += f"- {issue}\n"
     if missing:
-        message += f"\nMissing fields: {', '.join(missing)}"
+        message += f"\nCampos faltantes: {', '.join(missing)}"
 
     # Persist
     if state.get("quote_id"):
@@ -350,7 +356,7 @@ async def blocked_node(state: QuoteState) -> dict:
     validation = state.get("validation_result", {})
     issues = validation.get("issues", [])
 
-    reason = "Quote blocked due to:\n" + "\n".join(f"- {i}" for i in issues)
+    reason = "Cotización bloqueada por:\n" + "\n".join(f"- {i}" for i in issues)
 
     if state.get("quote_id"):
         update_quote(state["quote_id"], {"status": "blocked", "error": reason})

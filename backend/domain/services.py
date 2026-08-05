@@ -176,7 +176,7 @@ def validate_discount(client_tier: str, requested_discount: float) -> dict:
             "allowed": False,
             "requires_approval": True,
             "max_allowed": max_discount,
-            "reason": f"Requested {requested_discount}% exceeds maximum {max_discount}% for {client_tier} tier",
+            "reason": f"Descuento solicitado {requested_discount}% excede el máximo {max_discount}% para tier {client_tier}",
         }
 
     if requested_discount > auto_approve:
@@ -184,7 +184,7 @@ def validate_discount(client_tier: str, requested_discount: float) -> dict:
             "allowed": True,
             "requires_approval": True,
             "applied_discount": requested_discount,
-            "reason": f"Discount {requested_discount}% exceeds auto-approve limit of {auto_approve}% for {client_tier} tier",
+            "reason": f"Descuento {requested_discount}% excede el límite de auto-aprobación de {auto_approve}% para tier {client_tier}",
         }
 
     return {
@@ -203,10 +203,10 @@ def requires_approval(grand_total: float, discount_validation: dict) -> dict:
     reasons = []
 
     if grand_total > APPROVAL_THRESHOLD_USD:
-        reasons.append(f"Total USD {grand_total:,.2f} exceeds threshold of USD {APPROVAL_THRESHOLD_USD:,.2f}")
+        reasons.append(f"Total USD {grand_total:,.2f} excede el umbral de USD {APPROVAL_THRESHOLD_USD:,.2f}")
 
     if discount_validation.get("requires_approval"):
-        reasons.append(discount_validation.get("reason", "Discount exception"))
+        reasons.append(discount_validation.get("reason", "Excepción de descuento"))
 
     return {
         "required": len(reasons) > 0,

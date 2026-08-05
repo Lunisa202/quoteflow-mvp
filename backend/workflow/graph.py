@@ -3,7 +3,7 @@
 from functools import partial
 
 from langgraph.graph import StateGraph, START, END
-from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver  # from langgraph-checkpoint-sqlite
+from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 
 from backend.workflow.state import QuoteState
 from backend.workflow.nodes import (
@@ -147,5 +147,18 @@ def build_graph(llm, checkpointer=None):
 
 
 async def get_checkpointer(db_path: str):
-    """Create an async SQLite checkpointer for durable persistence."""
-    return AsyncSqliteSaver.from_conn_string(db_path)
+    """Create a checkpointer for durable persistence.
+    
+    Uses SQLite if available, falls back to MemorySaver for testing.
+    """
+    try:
+        from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
+        import aiosqlite
+        conn = await aiosqlite.connect(db_path)
+        saver = AsyncSqliteSaver(conn)
+        await saver.setup()
+        return saver
+    except Exception:
+        # Fallback to memory saver if SQLite checkpointer fails
+        from langgraph.checkpoint.memory import MemorySaver
+        return MemorySaver()

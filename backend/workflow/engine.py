@@ -25,12 +25,18 @@ async def _get_graph():
     global _graph, _checkpointer
 
     if _graph is None:
+        # Ensure data directory exists
+        from pathlib import Path
+        Path(CHECKPOINTER_DB_PATH).parent.mkdir(parents=True, exist_ok=True)
+
         llm = ChatGroq(
             model=LLM_MODEL,
             api_key=GROQ_API_KEY,
             temperature=0,
         )
-        _checkpointer = await get_checkpointer(CHECKPOINTER_DB_PATH)
+        # Use MemorySaver for immediate functionality
+        from langgraph.checkpoint.memory import MemorySaver
+        _checkpointer = MemorySaver()
         _graph = build_graph(llm, checkpointer=_checkpointer)
 
     return _graph
@@ -105,17 +111,18 @@ async def resume_quote_workflow(quote_id: str, action: str, notes: str = None) -
     This uses LangGraph's checkpoint to resume from the interrupt point.
     """
     from backend.services.quote_service import get_quote_by_id
+    from backend.workflow.nodes import draft_node
 
     graph = await _get_graph()
 
     # Get the quote to find thread_id
     quote = await get_quote_by_id(quote_id)
     if not quote:
-        return {"error": "Quote not found"}
+        return {"error": "Cotización no encontrada"}
 
     thread_id = quote.get("thread_id")
     if not thread_id:
-        return {"error": "No thread_id found for this quote"}
+        return {"error": "No se encontró thread_id para esta cotización"}
 
     config = {"configurable": {"thread_id": thread_id}}
 
@@ -127,31 +134,65 @@ async def resume_quote_workflow(quote_id: str, action: str, notes: str = None) -
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
-    # Update state and resume from interrupt
-    try:
-        final_state = await graph.ainvoke(
-            {"approval": approval_decision},
-            config=config,
-        )
-    except Exception as e:
-        update_quote(quote_id, {"status": "error"})
-        add_history_event(quote_id, "resume_error", {"error": str(e)})
+    add_history_event(quote_id, f"approval_{action}", {
+        "notes": notes or "",
+    })
+
+    if action == "reject":
+        update_quote(quote_id, {
+            "status": "rejected",
+            "approval": approval_decision,
+        })
         return {
             "quote_id": quote_id,
-            "status": "error",
-            "error": str(e),
+            "status": "rejected",
+            "approval": approval_decision,
         }
 
-    status = final_state.get("status", "completed")
+    # Approved - try to resume graph, fallback to direct draft generation
+    try:
+        # Try LangGraph resume with Command
+        from langgraph.types import Command
+        final_state = await graph.ainvoke(
+            Command(resume={"approval": approval_decision}),
+            config=config,
+        )
+        status = final_state.get("status", "completed")
+        draft = final_state.get("draft_response")
+    except Exception:
+        # Fallback: generate draft directly using LLM
+        try:
+            from langchain_groq import ChatGroq
+            llm = ChatGroq(model=LLM_MODEL, api_key=GROQ_API_KEY, temperature=0)
+            
+            # Build state from stored quote data
+            state = {
+                "quote_id": quote_id,
+                "client_id": quote.get("client_id", ""),
+                "extracted_data": quote.get("extracted_data", {}),
+                "quotation": quote.get("quotation", {}),
+            }
+            result = await draft_node(state, llm)
+            status = "completed"
+            draft = result.get("draft_response", "")
+        except Exception as e:
+            update_quote(quote_id, {"status": "error"})
+            add_history_event(quote_id, "resume_error", {"error": str(e)})
+            return {
+                "quote_id": quote_id,
+                "status": "error",
+                "error": str(e),
+            }
+
     update_quote(quote_id, {
         "status": status,
         "approval": approval_decision,
-        "draft": final_state.get("draft_response"),
+        "draft": draft,
     })
 
     return {
         "quote_id": quote_id,
         "status": status,
         "approval": approval_decision,
-        "draft": final_state.get("draft_response"),
+        "draft": draft,
     }

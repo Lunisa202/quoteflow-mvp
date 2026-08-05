@@ -38,7 +38,7 @@ graph TD
 ### Prerrequisitos
 
 - Python 3.11+
-- API key de OpenAI
+- API key de Groq (gratis en https://console.groq.com)
 
 ### Instalación
 
@@ -125,16 +125,19 @@ quoteflow/
 ## Decisiones de Diseño Clave
 
 - **LLM solo para interpretación y redacción** — Todos los cálculos de precios, stock, descuentos y políticas son funciones deterministas.
+- **Prompt dinámico** — El catálogo de productos se inyecta al prompt desde `domain/data.py`, no está hardcodeado.
 - **Human-in-the-loop basado en interrupt** — El mecanismo de interrupt de LangGraph pausa el workflow en el nodo de aprobación.
-- **Persistencia durable** — El checkpointer SQLite sobrevive reinicios de la aplicación.
+- **Persistencia del workflow** — Checkpointer en memoria (MemorySaver) para el MVP; migrable a SQLite/PostgreSQL para producción.
 - **Respuestas API uniformes** — Todos los endpoints retornan `{success, data, error, meta}`.
 - **Estado tipado** — TypedDict completo asegura consistencia entre nodos.
+- **Groq (gratis)** — LLM provider sin costo, intercambiable por OpenAI con un cambio de 1 línea.
 
 ## Variables de Entorno
 
 | Variable | Descripción | Default |
 |----------|-------------|---------|
-| `OPENAI_API_KEY` | API key de OpenAI | (requerido) |
+| `GROQ_API_KEY` | API key de Groq (gratis) | (requerido) |
+| `LLM_MODEL` | Modelo de LLM a usar | llama-3.1-8b-instant |
 | `APP_PORT` | Puerto del backend | 8000 |
 | `CHECKPOINTER_DB_PATH` | Ruta del checkpoint SQLite | ./data/checkpoints.db |
 | `DATABASE_URL` | URL de base de datos | sqlite:///./data/quoteflow.db |

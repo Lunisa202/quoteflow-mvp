@@ -1,0 +1,573 @@
+[
+  {
+    "id": "d48212a2-9b83-43a5-9ea0-0a42257280b0",
+    "client_id": "CLI-003",
+    "raw_text": "\"Necesito 5 m\u00e1quinas de soldar WL-100 y 3 compresores CP-750 para nuestra planta de Piura. Solicitamos 12% de descuento sobre el total.",
+    "status": "completed",
+    "created_at": "2026-08-05T21:09:33.417572+00:00",
+    "updated_at": "2026-08-05T21:10:37.001387+00:00",
+    "extracted_data": {
+      "items": [
+        {
+          "sku": "WL-100",
+          "product_name": "M\u00e1quina de Soldar Industrial",
+          "quantity": 5,
+          "requested_discount_pct": 12
+        },
+        {
+          "sku": "CP-750",
+          "product_name": "Compresor de Aire",
+          "quantity": 3,
+          "requested_discount_pct": 12
+        }
+      ],
+      "delivery_location": "Piura",
+      "delivery_date": "",
+      "requested_discount_pct": 12,
+      "special_instructions": "",
+      "missing_fields": [],
+      "client_id": "CLI-003",
+      "client_name": "Petroleos del Norte"
+    },
+    "validation_result": {
+      "is_valid": true,
+      "client_known": true,
+      "all_products_known": true,
+      "stock_available": true,
+      "discount_allowed": true,
+      "requires_approval": true,
+      "issues": [],
+      "approval_reasons": [
+        "Total estimado USD 17,900.00 excede el umbral de USD 10,000"
+      ]
+    },
+    "quotation": {
+      "lines": [
+        {
+          "sku": "WL-100",
+          "product_name": "M\u00e1quina de Soldar Industrial WL-100",
+          "quantity": 5,
+          "unit_price": 2500.0,
+          "subtotal": 12500.0,
+          "discount_pct": 12,
+          "discount_amount": 1500.0,
+          "line_total": 11000.0,
+          "currency": "USD"
+        },
+        {
+          "sku": "CP-750",
+          "product_name": "Compresor de Aire CP-750",
+          "quantity": 3,
+          "unit_price": 1800.0,
+          "subtotal": 5400.0,
+          "discount_pct": 12,
+          "discount_amount": 648.0,
+          "line_total": 4752.0,
+          "currency": "USD"
+        }
+      ],
+      "subtotal": 17900.0,
+      "total_discount": 2148.0,
+      "grand_total": 15752.0,
+      "currency": "USD",
+      "requires_approval": true,
+      "approval_reasons": [
+        "Total estimado USD 17,900.00 excede el umbral de USD 10,000",
+        "Excepci\u00f3n de descuento",
+        "Total USD 15,752.00 excede el umbral de USD 10,000.00"
+      ]
+    },
+    "approval": {
+      "action": "approve",
+      "notes": "",
+      "approved_by": "reviewer",
+      "timestamp": "2026-08-05T21:10:35.302884+00:00"
+    },
+    "draft": "**Borrador de Cotizaci\u00f3n**\n\n**Para:** Petroleos del Norte\n**Cliente ID:** CLI-003\n**Fecha:** [Fecha actual]\n\nEstimado/a [Nombre del contacto de Petroleos del Norte],\n\nMe dirijo a usted para presentarle la siguiente cotizaci\u00f3n para la compra de los productos solicitados. A continuaci\u00f3n, se detallan los productos seleccionados, junto con sus respectivos precios y descuentos aplicados.\n\n**Resumen de la Cotizaci\u00f3n:**\n\n| C\u00f3digo de Producto | Descripci\u00f3n del Producto | Cantidad | Precio Unitario | Subtotal | Descuento | Total |\n| --- | --- | --- | --- | --- | --- | --- |\n| WL-100 | M\u00e1quina de Soldar Industrial WL-100 | 5 | $2,500.00 | $12,500.00 | $1,500.00 | $11,000.00 |\n| CP-750 | Compresor de Aire CP-750 | 3 | $1,800.00 | $5,400.00 | $648.00 | $4,752.00 |\n\n**Total de la Cotizaci\u00f3n:** $15,752.00\n\n**Descuento Aplicado:** 12% del subtotal\n\n**Condiciones de Entrega:**\n\n* La entrega se realizar\u00e1 en la ubicaci\u00f3n solicitada por el cliente en Piura.\n* El plazo de entrega es de 30 d\u00edas a partir de la fecha de confirmaci\u00f3n de la orden de compra.\n\n**T\u00e9rminos y Condiciones:**\n\n* El pago se realizar\u00e1 en efectivo o mediante transferencia bancaria dentro de los 30 d\u00edas siguientes a la fecha de entrega.\n* El cliente acepta las condiciones de entrega y pago establecidas en esta cotizaci\u00f3n.\n\n**Per\u00edodo de Validez:**\n\nEsta cotizaci\u00f3n es v\u00e1lida durante un per\u00edodo de 30 d\u00edas a partir de la fecha de emisi\u00f3n.\n\n**T\u00e9rminos Est\u00e1ndar:**\n\n* El cliente acepta las condiciones de entrega y pago establecidas en esta cotizaci\u00f3n.\n* El proveedor se reserva el derecho de modificar o cancelar la cotizaci\u00f3n en cualquier momento.\n\nAgradecemos su inter\u00e9s en nuestros productos y esperamos su respuesta a la brevedad. Por favor, no dude en hacernos llegar cualquier pregunta o comentario que tenga.\n\nAtentamente,\n\n[Su nombre]\nAndesPro Industrial\n[Su direcci\u00f3n]\n[Su tel\u00e9fono]\n[Su correo electr\u00f3nico]",
+    "history": [
+      {
+        "timestamp": "2026-08-05T21:09:33.488090+00:00",
+        "event": "workflow_started",
+        "details": {
+          "client_id": "CLI-003",
+          "thread_id": "b389f065-94c0-4551-b98e-55bacd6f2dad"
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:09:34.514904+00:00",
+        "event": "extraction_completed",
+        "details": {
+          "items_count": 2
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:09:34.546980+00:00",
+        "event": "validation_completed",
+        "details": {
+          "is_valid": true,
+          "issues_count": 0
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:09:34.580195+00:00",
+        "event": "calculation_completed",
+        "details": {
+          "grand_total": 15752.0,
+          "requires_approval": true
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:09:34.624006+00:00",
+        "event": "approval_required",
+        "details": {
+          "reasons": [
+            "Total estimado USD 17,900.00 excede el umbral de USD 10,000"
+          ]
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:10:35.302884+00:00",
+        "event": "approval_approve",
+        "details": {
+          "notes": ""
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:10:36.984247+00:00",
+        "event": "draft_generated",
+        "details": null
+      }
+    ],
+    "thread_id": "b389f065-94c0-4551-b98e-55bacd6f2dad"
+  },
+  {
+    "id": "208cfd27-99d1-419f-87ac-50b5fe6ff49e",
+    "client_id": "CLI-003",
+    "raw_text": "\"Necesito 5 m\u00e1quinas de soldar WL-100 y 3 compresores CP-750 para nuestra planta de Piura. Solicitamos 12% de descuento sobre el total.",
+    "status": "rejected",
+    "created_at": "2026-08-05T21:11:13.180349+00:00",
+    "updated_at": "2026-08-05T21:11:59.549343+00:00",
+    "extracted_data": {
+      "items": [
+        {
+          "sku": "WL-100",
+          "product_name": "M\u00e1quina de Soldar Industrial",
+          "quantity": 5,
+          "requested_discount_pct": 12
+        },
+        {
+          "sku": "CP-750",
+          "product_name": "Compresor de Aire",
+          "quantity": 3,
+          "requested_discount_pct": 12
+        }
+      ],
+      "delivery_location": "Piura",
+      "delivery_date": "",
+      "requested_discount_pct": 12,
+      "special_instructions": "",
+      "missing_fields": [],
+      "client_id": "CLI-003",
+      "client_name": "Petroleos del Norte"
+    },
+    "validation_result": {
+      "is_valid": true,
+      "client_known": true,
+      "all_products_known": true,
+      "stock_available": true,
+      "discount_allowed": true,
+      "requires_approval": true,
+      "issues": [],
+      "approval_reasons": [
+        "Total estimado USD 17,900.00 excede el umbral de USD 10,000"
+      ]
+    },
+    "quotation": {
+      "lines": [
+        {
+          "sku": "WL-100",
+          "product_name": "M\u00e1quina de Soldar Industrial WL-100",
+          "quantity": 5,
+          "unit_price": 2500.0,
+          "subtotal": 12500.0,
+          "discount_pct": 12,
+          "discount_amount": 1500.0,
+          "line_total": 11000.0,
+          "currency": "USD"
+        },
+        {
+          "sku": "CP-750",
+          "product_name": "Compresor de Aire CP-750",
+          "quantity": 3,
+          "unit_price": 1800.0,
+          "subtotal": 5400.0,
+          "discount_pct": 12,
+          "discount_amount": 648.0,
+          "line_total": 4752.0,
+          "currency": "USD"
+        }
+      ],
+      "subtotal": 17900.0,
+      "total_discount": 2148.0,
+      "grand_total": 15752.0,
+      "currency": "USD",
+      "requires_approval": true,
+      "approval_reasons": [
+        "Total estimado USD 17,900.00 excede el umbral de USD 10,000",
+        "Excepci\u00f3n de descuento",
+        "Total USD 15,752.00 excede el umbral de USD 10,000.00"
+      ]
+    },
+    "approval": {
+      "action": "reject",
+      "notes": "",
+      "approved_by": "reviewer",
+      "timestamp": "2026-08-05T21:11:59.521018+00:00"
+    },
+    "draft": null,
+    "history": [
+      {
+        "timestamp": "2026-08-05T21:11:13.221339+00:00",
+        "event": "workflow_started",
+        "details": {
+          "client_id": "CLI-003",
+          "thread_id": "cbcf05ce-361b-4f29-b482-12b7fb637fb6"
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:11:13.795304+00:00",
+        "event": "extraction_completed",
+        "details": {
+          "items_count": 2
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:11:13.841630+00:00",
+        "event": "validation_completed",
+        "details": {
+          "is_valid": true,
+          "issues_count": 0
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:11:13.889596+00:00",
+        "event": "calculation_completed",
+        "details": {
+          "grand_total": 15752.0,
+          "requires_approval": true
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:11:13.928717+00:00",
+        "event": "approval_required",
+        "details": {
+          "reasons": [
+            "Total estimado USD 17,900.00 excede el umbral de USD 10,000"
+          ]
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:11:59.522009+00:00",
+        "event": "approval_reject",
+        "details": {
+          "notes": ""
+        }
+      }
+    ],
+    "thread_id": "cbcf05ce-361b-4f29-b482-12b7fb637fb6"
+  },
+  {
+    "id": "f6f3e43a-9b1b-43fe-847c-5107e22a1181",
+    "client_id": "CLI-999",
+    "raw_text": "Quiero cotizar 50 guantes GL-300 con entrega en Cusco.",
+    "status": "needs_clarification",
+    "created_at": "2026-08-05T21:13:33.516503+00:00",
+    "updated_at": "2026-08-05T21:13:34.575628+00:00",
+    "extracted_data": {
+      "items": [
+        {
+          "sku": "GL-300",
+          "product_name": "Guantes Resistentes a Qu\u00edmicos",
+          "quantity": 50,
+          "requested_discount_pct": 0
+        }
+      ],
+      "delivery_location": "Cusco",
+      "delivery_date": "",
+      "requested_discount_pct": 0,
+      "special_instructions": "",
+      "missing_fields": [],
+      "client_id": "CLI-999"
+    },
+    "validation_result": {
+      "is_valid": false,
+      "client_known": false,
+      "all_products_known": true,
+      "stock_available": false,
+      "discount_allowed": true,
+      "requires_approval": false,
+      "issues": [
+        "Cliente desconocido: CLI-999",
+        "Stock insuficiente para GL-300 en Cusco: se necesitan 50, disponibles 0"
+      ],
+      "approval_reasons": []
+    },
+    "quotation": null,
+    "approval": null,
+    "draft": null,
+    "history": [
+      {
+        "timestamp": "2026-08-05T21:13:33.562701+00:00",
+        "event": "workflow_started",
+        "details": {
+          "client_id": "CLI-999",
+          "thread_id": "bcfc80d5-8b60-44df-b660-7099a2235830"
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:13:34.473677+00:00",
+        "event": "extraction_completed",
+        "details": {
+          "items_count": 1
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:13:34.517824+00:00",
+        "event": "validation_completed",
+        "details": {
+          "is_valid": false,
+          "issues_count": 2
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:13:34.556712+00:00",
+        "event": "clarification_needed",
+        "details": {
+          "issues": [
+            "Cliente desconocido: CLI-999",
+            "Stock insuficiente para GL-300 en Cusco: se necesitan 50, disponibles 0"
+          ]
+        }
+      }
+    ],
+    "thread_id": "bcfc80d5-8b60-44df-b660-7099a2235830",
+    "clarification_message": "Se necesita la siguiente informaci\u00f3n para procesar esta cotizaci\u00f3n:\n- Cliente desconocido: CLI-999\n- Stock insuficiente para GL-300 en Cusco: se necesitan 50, disponibles 0\n"
+  },
+  {
+    "id": "a0596e08-b3a1-463d-a9f2-1935ea89c6e8",
+    "client_id": "CLI-001",
+    "raw_text": "Necesito 200 m\u00e1quinas de soldar WL-100 para entrega en Arequipa",
+    "status": "blocked",
+    "created_at": "2026-08-05T21:14:06.622727+00:00",
+    "updated_at": "2026-08-05T21:14:07.663770+00:00",
+    "extracted_data": {
+      "items": [
+        {
+          "sku": "WL-100",
+          "product_name": "M\u00e1quina de Soldar Industrial",
+          "quantity": 200,
+          "requested_discount_pct": 0
+        }
+      ],
+      "delivery_location": "Arequipa",
+      "delivery_date": "",
+      "requested_discount_pct": 0,
+      "special_instructions": "",
+      "missing_fields": [],
+      "client_id": "CLI-001",
+      "client_name": "Minera del Sur SAC"
+    },
+    "validation_result": {
+      "is_valid": false,
+      "client_known": true,
+      "all_products_known": true,
+      "stock_available": false,
+      "discount_allowed": true,
+      "requires_approval": true,
+      "issues": [
+        "Stock insuficiente para WL-100 en Arequipa: se necesitan 200, disponibles 5"
+      ],
+      "approval_reasons": [
+        "Total estimado USD 500,000.00 excede el umbral de USD 10,000"
+      ]
+    },
+    "quotation": null,
+    "approval": null,
+    "draft": null,
+    "history": [
+      {
+        "timestamp": "2026-08-05T21:14:06.702305+00:00",
+        "event": "workflow_started",
+        "details": {
+          "client_id": "CLI-001",
+          "thread_id": "47d99488-3d3f-4040-984c-ea209118e53e"
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:14:07.549403+00:00",
+        "event": "extraction_completed",
+        "details": {
+          "items_count": 1
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:14:07.595181+00:00",
+        "event": "validation_completed",
+        "details": {
+          "is_valid": false,
+          "issues_count": 1
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:14:07.643617+00:00",
+        "event": "quote_blocked",
+        "details": {
+          "reason": "Cotizaci\u00f3n bloqueada por:\n- Stock insuficiente para WL-100 en Arequipa: se necesitan 200, disponibles 5"
+        }
+      }
+    ],
+    "thread_id": "47d99488-3d3f-4040-984c-ea209118e53e",
+    "error": "Cotizaci\u00f3n bloqueada por:\n- Stock insuficiente para WL-100 en Arequipa: se necesitan 200, disponibles 5"
+  },
+  {
+    "id": "056c95fa-232b-468e-92d1-cab4aaa1a06a",
+    "client_id": "CLI-003",
+    "raw_text": "Necesito 5 m\u00e1quinas de soldar WL-100 y 3 compresores CP-750 para nuestra planta de Piura. Solicitamos 12% de descuento sobre el total.",
+    "status": "completed",
+    "created_at": "2026-08-05T21:17:08.557729+00:00",
+    "updated_at": "2026-08-05T21:23:14.705615+00:00",
+    "extracted_data": {
+      "items": [
+        {
+          "sku": "WL-100",
+          "product_name": "M\u00e1quina de Soldar Industrial",
+          "quantity": 5,
+          "requested_discount_pct": 12
+        },
+        {
+          "sku": "CP-750",
+          "product_name": "Compresor de Aire",
+          "quantity": 3,
+          "requested_discount_pct": 12
+        }
+      ],
+      "delivery_location": "Piura",
+      "delivery_date": "",
+      "requested_discount_pct": 12,
+      "special_instructions": "",
+      "missing_fields": [],
+      "client_id": "CLI-003",
+      "client_name": "Petroleos del Norte"
+    },
+    "validation_result": {
+      "is_valid": true,
+      "client_known": true,
+      "all_products_known": true,
+      "stock_available": true,
+      "discount_allowed": true,
+      "requires_approval": true,
+      "issues": [],
+      "approval_reasons": [
+        "Total estimado USD 17,900.00 excede el umbral de USD 10,000"
+      ]
+    },
+    "quotation": {
+      "lines": [
+        {
+          "sku": "WL-100",
+          "product_name": "M\u00e1quina de Soldar Industrial WL-100",
+          "quantity": 5,
+          "unit_price": 2500.0,
+          "subtotal": 12500.0,
+          "discount_pct": 12,
+          "discount_amount": 1500.0,
+          "line_total": 11000.0,
+          "currency": "USD"
+        },
+        {
+          "sku": "CP-750",
+          "product_name": "Compresor de Aire CP-750",
+          "quantity": 3,
+          "unit_price": 1800.0,
+          "subtotal": 5400.0,
+          "discount_pct": 12,
+          "discount_amount": 648.0,
+          "line_total": 4752.0,
+          "currency": "USD"
+        }
+      ],
+      "subtotal": 17900.0,
+      "total_discount": 2148.0,
+      "grand_total": 15752.0,
+      "currency": "USD",
+      "requires_approval": true,
+      "approval_reasons": [
+        "Total estimado USD 17,900.00 excede el umbral de USD 10,000",
+        "Excepci\u00f3n de descuento",
+        "Total USD 15,752.00 excede el umbral de USD 10,000.00"
+      ]
+    },
+    "approval": {
+      "action": "approve",
+      "notes": "",
+      "approved_by": "reviewer",
+      "timestamp": "2026-08-05T21:23:11.798114+00:00"
+    },
+    "draft": "**Borrador de Cotizaci\u00f3n**\n\n**Para:** Petroleos del Norte\n**Cliente ID:** CLI-003\n**Fecha:** [Fecha actual]\n\nEstimado/a [Nombre del contacto de Petroleos del Norte],\n\nMe dirijo a usted para presentarle la siguiente cotizaci\u00f3n para la compra de los productos solicitados. A continuaci\u00f3n, se detallan los productos seleccionados, junto con sus respectivos precios y descuentos aplicados.\n\n**Resumen de la Cotizaci\u00f3n:**\n\n| C\u00f3digo de Producto | Descripci\u00f3n del Producto | Cantidad | Precio Unitario | Subtotal | Descuento | Total |\n| --- | --- | --- | --- | --- | --- | --- |\n| WL-100 | M\u00e1quina de Soldar Industrial WL-100 | 5 | $2,500.00 | $12,500.00 | $1,500.00 | $11,000.00 |\n| CP-750 | Compresor de Aire CP-750 | 3 | $1,800.00 | $5,400.00 | $648.00 | $4,752.00 |\n\n**Total de la Cotizaci\u00f3n:** $15,752.00\n\n**Descuento Aplicado:** 12% del subtotal\n\n**Condiciones de Entrega:**\n\n* La entrega se realizar\u00e1 en la ubicaci\u00f3n solicitada por el cliente en Piura.\n* El plazo de entrega es de 30 d\u00edas a partir de la fecha de confirmaci\u00f3n de la orden de compra.\n\n**T\u00e9rminos y Condiciones:**\n\n* El pago se realizar\u00e1 en efectivo o mediante transferencia bancaria dentro de los 30 d\u00edas siguientes a la fecha de entrega.\n* El cliente acepta las condiciones de entrega y pago establecidas en esta cotizaci\u00f3n.\n\n**Per\u00edodo de Validez:**\n\nEsta cotizaci\u00f3n es v\u00e1lida durante un per\u00edodo de 30 d\u00edas a partir de la fecha de emisi\u00f3n.\n\n**T\u00e9rminos Est\u00e1ndar:**\n\n* El cliente acepta las condiciones de entrega y pago establecidas en esta cotizaci\u00f3n.\n* El proveedor se reserva el derecho de modificar o cancelar la cotizaci\u00f3n en cualquier momento.\n\nAgradecemos su inter\u00e9s en nuestros productos y esperamos su respuesta a la brevedad. Por favor, no dude en hacernos llegar cualquier pregunta o comentario que tenga.\n\nAtentamente,\n\n[Su nombre]\nAndesPro Industrial\n[Su direcci\u00f3n]\n[Su tel\u00e9fono]\n[Su correo electr\u00f3nico]",
+    "history": [
+      {
+        "timestamp": "2026-08-05T21:17:08.598714+00:00",
+        "event": "workflow_started",
+        "details": {
+          "client_id": "CLI-003",
+          "thread_id": "a6ac5193-eab4-4685-8583-7da04e74f1d7"
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:17:09.553954+00:00",
+        "event": "extraction_completed",
+        "details": {
+          "items_count": 2
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:17:09.637128+00:00",
+        "event": "validation_completed",
+        "details": {
+          "is_valid": true,
+          "issues_count": 0
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:17:09.690133+00:00",
+        "event": "calculation_completed",
+        "details": {
+          "grand_total": 15752.0,
+          "requires_approval": true
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:17:09.734220+00:00",
+        "event": "approval_required",
+        "details": {
+          "reasons": [
+            "Total estimado USD 17,900.00 excede el umbral de USD 10,000"
+          ]
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:23:11.799114+00:00",
+        "event": "approval_approve",
+        "details": {
+          "notes": ""
+        }
+      },
+      {
+        "timestamp": "2026-08-05T21:23:14.676633+00:00",
+        "event": "draft_generated",
+        "details": null
+      }
+    ],
+    "thread_id": "a6ac5193-eab4-4685-8583-7da04e74f1d7"
+  }
+]
