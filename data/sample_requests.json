@@ -1,0 +1,56 @@
+[
+  {
+    "id": "sample-01",
+    "title": "Standard Quote - Gold Client",
+    "description": "Complete request with all information, within policy limits",
+    "client_id": "CLI-001",
+    "raw_text": "Necesito 20 cascos modelo HX-200 para la planta de Arequipa. Somos clientes Gold. Requiero entrega la próxima semana y un 8% de descuento.",
+    "expected_outcome": "completed",
+    "expected_route": "extraction -> validation -> calculation -> draft"
+  },
+  {
+    "id": "sample-02",
+    "title": "High-Value Quote - Needs Approval",
+    "description": "Total exceeds USD 10,000 threshold",
+    "client_id": "CLI-003",
+    "raw_text": "Need 5 WL-100 welding machines and 3 CP-750 compressors for our Piura facility. Requesting 12% discount on the total order.",
+    "expected_outcome": "needs_approval",
+    "expected_route": "extraction -> validation -> calculation -> approval (interrupt)"
+  },
+  {
+    "id": "sample-03",
+    "title": "Incomplete Request - Needs Clarification",
+    "description": "Missing product, quantity, and delivery information",
+    "client_id": "CLI-002",
+    "raw_text": "I need some safety equipment for our new project.",
+    "expected_outcome": "needs_clarification",
+    "expected_route": "extraction -> validation -> clarification"
+  },
+  {
+    "id": "sample-04",
+    "title": "Unknown Client",
+    "description": "Client ID not in the system",
+    "client_id": "CLI-999",
+    "raw_text": "Quiero cotizar 50 guantes GL-300 con entrega en Cusco.",
+    "expected_outcome": "needs_clarification",
+    "expected_route": "extraction -> validation -> clarification"
+  },
+  {
+    "id": "sample-05",
+    "title": "Stock Shortage",
+    "description": "Requested quantity exceeds available stock",
+    "client_id": "CLI-001",
+    "raw_text": "Need 200 WL-100 welding machines delivered to Arequipa next month.",
+    "expected_outcome": "blocked",
+    "expected_route": "extraction -> validation -> blocked"
+  },
+  {
+    "id": "sample-06",
+    "title": "Discount Exceeds Policy",
+    "description": "Silver client requesting above maximum discount",
+    "client_id": "CLI-002",
+    "raw_text": "Necesito 100 cascos HX-200 para Lima con 15% de descuento.",
+    "expected_outcome": "needs_approval",
+    "expected_route": "extraction -> validation -> calculation -> approval"
+  }
+]
