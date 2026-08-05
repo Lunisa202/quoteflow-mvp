@@ -6,30 +6,31 @@ QuoteFlow reduce el tiempo de preparación de cotizaciones automatizando la extr
 
 ## Arquitectura
 
-```
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│   Streamlit UI  │────▶│   FastAPI Backend │────▶│  LangGraph Flow │
-│   (Frontend)    │◀────│   (REST API)      │◀────│  (Workflow)     │
-└─────────────────┘     └──────────────────┘     └─────────────────┘
-                                │                         │
-                                ▼                         ▼
-                        ┌──────────────┐         ┌──────────────┐
-                        │  JSON Store  │         │ SQLite       │
-                        │  (Quotes)    │         │ Checkpointer │
-                        └──────────────┘         └──────────────┘
+```mermaid
+graph LR
+    A[Streamlit UI<br>Frontend] -->|HTTP| B[FastAPI Backend<br>REST API]
+    B -->|Orquesta| C[LangGraph Flow<br>Workflow]
+    B --> D[(JSON Store<br>Quotes)]
+    C --> E[(SQLite<br>Checkpointer)]
 ```
 
 ## Grafo del Workflow
 
-```
-START → Extraction → Validation → [Ruta]
-                                    ├── Clarification → END  (información faltante)
-                                    ├── Blocked → END        (sin stock / producto desconocido)
-                                    └── Calculation → [Ruta]
-                                                       ├── Approval (interrupt) → Post-Approval → [Ruta]
-                                                       │                                           ├── Draft → END
-                                                       │                                           └── END (rechazado)
-                                                       └── Draft → END
+```mermaid
+graph TD
+    START((START)) --> EX[Extraction<br>LLM]
+    EX --> VAL[Validation<br>Determinista]
+    VAL -->|Info faltante| CLAR[Clarification]
+    VAL -->|Sin stock / Producto desconocido| BLOCK[Blocked]
+    VAL -->|Válido| CALC[Calculation<br>Determinista]
+    CALC -->|Total > $10K o descuento excepción| APR[Approval<br>INTERRUPT]
+    CALC -->|Sin aprobación| DRAFT[Draft<br>LLM]
+    APR --> POST[Post-Approval]
+    POST -->|Aprobado| DRAFT
+    POST -->|Rechazado| END1((END))
+    DRAFT --> END2((END))
+    CLAR --> END3((END))
+    BLOCK --> END4((END))
 ```
 
 ## Inicio Rápido
