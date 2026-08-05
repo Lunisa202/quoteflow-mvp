@@ -137,3 +137,7 @@ quoteflow/
 | `APP_PORT` | Puerto del backend | 8000 |
 | `CHECKPOINTER_DB_PATH` | Ruta del checkpoint SQLite | ./data/checkpoints.db |
 | `DATABASE_URL` | URL de base de datos | sqlite:///./data/quoteflow.db |
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Ver [LICENSE](LICENSE) para más detalles.
